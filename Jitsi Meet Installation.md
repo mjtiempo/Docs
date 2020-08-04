@@ -20,8 +20,8 @@ apt-get install lua5.2 -y &&
 apt-get install liblua5.2 -y &&
 apt-get install luarocks -y &&
 luarocks install basexx &&
-apt-get install libssl1.0-dev -y &&
-luarocks install luacrypto &&
+apt-get install libssl-dev -y &&
+luarocks install luacrypto2 &&
 mkdir src &&
 cd src &&
 luarocks download lua-cjson &&
@@ -29,7 +29,13 @@ luarocks unpack lua-cjson-2.1.0.6-1.src.rock &&
 cd lua-cjson-2.1.0.6-1/lua-cjson &&
 sed -i 's/lua_objlen/lua_rawlen/g' lua_cjson.c &&
 sed -i 's|$(PREFIX)/include|/usr/include/lua5.2|g' Makefile &&
+luarocks make && 
+cd &&
+apt install git cmake liblua5.1-0-dev -y &&
+git clone https://github.com/evanlabs/luacrypto &&
+cd luacrypto &&
 luarocks make &&
+cd &&
 luarocks install luajwtjitsi &&
 cd &&
 wget https://prosody.im/files/prosody-debian-packages.key -O- | sudo apt-key add - &&
